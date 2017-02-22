@@ -1,0 +1,30 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class GridSpace : MonoBehaviour
+{
+    public Button button;
+    public Text buttonText;
+
+    private GameController gameController;
+
+    // Der Knopf zeigt den Wert "X" oder "O" an, wenn er angeklickt wird
+    public void SetSpace()
+    {
+        if (gameController.playerMove == true)
+        {
+            buttonText.text = gameController.GetPlayerSide();
+            // Der Knopf selbst ist nicht reaktionsfähig
+            button.interactable = false;
+            gameController.EndTurn();
+        }
+    }
+
+    // Diese Funktion gibt void zurück, die den gameController als Parameter annimt und der gameControllervariablen als Referenz zuweist
+    public void SetGameControllerReference(GameController controller)
+    {
+        gameController = controller;
+    }
+}
