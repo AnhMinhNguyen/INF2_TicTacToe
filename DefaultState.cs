@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class DefaultState : IGameState {
 
-    private readonly GameManager gm;
+	private readonly GameManager gm;
 
-    public DefaultState(GameManager gm)
-    {
-        this.gm = gm;
-    }
+	public DefaultState(GameManager gm){
+		this.gm = gm;
+	}
 
-	public void Run()
-    {
-
-    }
+	public void Run(){
+		Debug.Log ("over");
+	}
 }

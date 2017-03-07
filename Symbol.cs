@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Symbol : MonoBehaviour {
 
-    public Value value;
-    public enum Value
-    {
-        X,
-        O
-    }
+	public Value value;
+
+	public enum Value{
+		X,
+		O
+	}
+
 
 	// Use this for initialization
 	void Start () {

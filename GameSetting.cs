@@ -9,11 +9,11 @@ public class GameSetting : MonoBehaviour {
 	public GameMode mode;
 
 	public Symbol.Value Player1Symbol;
-    public int boardSize;
 
-    public int winCon;
+	public int boardSize;
+	public int winCon;
 
-    public enum GameMode{
+	public enum GameMode{
 		multiOne,
 		single
 	}

@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
+
     public GameObject winSingle;
     public GameObject loseSingle;
     public GameObject winMulti;
@@ -20,7 +21,7 @@ public class GameManager : MonoBehaviour
 
     public int winCon;
 
-    List<Field> allField;
+    List<Field> allField = new List<Field>();
     List<Field> xField = new List<Field>();
     List<Field> oField = new List<Field>();
 
@@ -226,11 +227,11 @@ public class GameManager : MonoBehaviour
     {
         if (v == Symbol.Value.O)
         {
-            winMulti.transform.FindChild("Background").FindChild("Headline").GetComponent<Text>().text = "O WIN!";
+            winMulti.transform.FindChild("Background").FindChild("Headline").GetComponent<Text>().text = "O WIN";
         }
         else
         {
-            winMulti.transform.FindChild("Background").FindChild("Headline").GetComponent<Text>().text = "X WIN!";
+            winMulti.transform.FindChild("Background").FindChild("Headline").GetComponent<Text>().text = "X WIN";
         }
         winMulti.SetActive(true);
     }
@@ -252,7 +253,7 @@ public class GameManager : MonoBehaviour
 
     public bool CheckTie()
     {
-        for (int i = 0; i <allField.Count; i++)
+        for (int i = 0; i < allField.Count; i++)
         {
             if (allField[i].transform.GetComponent<Field>().sym == null)
             {
@@ -310,14 +311,19 @@ public class GameManager : MonoBehaviour
         {
             if (allField[i].transform.GetComponent<Field>().sym == null)
             {
+
+                // Beginnt das Kopfrechnen
                 allField[i].transform.GetComponent<Field>().sym = comSym.GetComponent<Symbol>();
                 comAllField.Add(allField[i]);
+
+                // Prüfen, ob diese Bewegung schon gewonnen ist und wenn ja, gibt diesen Feld zurück
                 if (CheckWin(comValue))
                 {
                     Maxpoint = 100;
                     f = allField[i];
                     return f;
                 }
+                // Wenn es noch nicht gewonnen ist, zählt es die Länge der Kette
                 else
                 {
                     for (int a = 0; a < comAllField.Count; a++)
@@ -334,17 +340,23 @@ public class GameManager : MonoBehaviour
                 }
 
 
-
+                // Versuch zu spielen als Spieler
                 for (int z = 0; z < allField.Count; z++)
                 {
                     if (allField[z].transform.GetComponent<Field>().sym == null)
                     {
+
+                        // Beginnt das Kopfrechnen
                         allField[z].transform.GetComponent<Field>().sym = currentSym.GetComponent<Symbol>();
                         playAllField.Add(allField[z]);
+
+                        // Es findet die Bewegung, mit der der Spieler gewinnen wird und 100P hat
                         if (CheckWin(playerValue))
                         {
                             PlayerPoint = 100;
                         }
+
+                        // Wenn es die Bewegung nicht finden kann, zählt es der max. Punkt, den der Spieler hat
                         else
                         {
                             for (int a = 0; a < playAllField.Count; a++)
@@ -359,15 +371,19 @@ public class GameManager : MonoBehaviour
                                     PlayerPoint = PointCalDia2(allField[a], playerValue);
                             }
                         }
+                        // Entfernt dieses Kopfrechnen
                         playAllField.Remove(allField[z]);
                         allField[z].transform.GetComponent<Field>().sym = null;
                     }
                 }
 
-
+                // Vergleichen der Punkt von AI mit dem vom Spieler
                 if (Maxpoint <= (ComPoint - PlayerPoint))
                 {
+                    // Wenn der Maxpoint besser ist, wechseln diesen neuen mit den alten
                     Maxpoint = ComPoint - PlayerPoint;
+
+                    // Diesen Feld speichern
                     f = allField[i];
                     ComPoint = 0;
                     PlayerPoint = 0;
@@ -383,18 +399,8 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (f != null)
-        {
-            return f;
-        }
-        else
-        {
-            Debug.Log("no more f");
-            Debug.Log(Maxpoint);
-            Debug.Log(PlayerPoint);
-            Debug.Log(ComPoint);
-            return f;
-        }
+        // Gibt diesen Feld zurück
+        return f;
     }
 
     public void ComPlay(Field f)
@@ -519,5 +525,6 @@ public class GameManager : MonoBehaviour
         }
 
         return point;
+
     }
 }

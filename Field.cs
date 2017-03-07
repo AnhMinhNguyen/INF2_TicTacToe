@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Field : MonoBehaviour {
 
-    public Symbol sym;
+	public Symbol sym;
 
 	// Use this for initialization
 	void Start () {
